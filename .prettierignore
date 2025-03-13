@@ -1,0 +1,11 @@
+.git/
+.astro/
+.husky/
+.playwright/
+.vscode
+.vercel/
+
+dist/
+node_modules/
+
+**/*.md

@@ -1,0 +1,12 @@
+{
+	"extends": [
+		"stylelint-config-standard",
+		"stylelint-config-recommended",
+		"stylelint-config-tailwindcss",
+		"stylelint-prettier/recommended"
+	],
+	"plugins": ["stylelint-prettier"],
+	"rules": {
+		"prettier/prettier": true
+	}
+}

@@ -1,0 +1,15 @@
+{
+	"recommendations": [
+		"astro-build.astro-vscode",
+		"bradlc.vscode-tailwindcss",
+		"dbaeumer.vscode-eslint",
+		"editorconfig.editorconfig",
+		"esbenp.prettier-vscode",
+		"ms-playwright.playwright",
+		"stylelint.vscode-stylelint",
+		"usernamehw.todo-md",
+		"vitest.explorer",
+		"vivaxy.vscode-conventional-commits"
+	],
+	"unwantedRecommendations": []
+}
