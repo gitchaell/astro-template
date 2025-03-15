@@ -29,16 +29,6 @@ const { title, description } = Astro.props
 			content={Astro.generator}
 		/>
 		<title>{title}</title>
-
-		<link
-			rel='preconnect'
-			href='https://rsms.me/'
-		/>
-		<link
-			rel='stylesheet'
-			href='https://rsms.me/inter/inter.css'
-		/>
-
 		<SEO
 			url='https://amazing.app/'
 			title={title}
@@ -50,7 +40,8 @@ const { title, description } = Astro.props
 		<ClientRouter />
 	</head>
 
-	<body class='bg-gray-900'>
+	<body
+		class='relative h-dvh overflow-x-hidden overflow-y-auto bg-zinc-50 font-sans text-black antialiased selection:bg-zinc-300 selection:text-zinc-900 dark:bg-zinc-900 dark:text-white dark:selection:bg-zinc-700 dark:selection:text-zinc-50'>
 		<slot />
 		<Analytics />
 	</body>

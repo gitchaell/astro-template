@@ -1,9 +1,12 @@
 ---
-interface Props {
-	error: unknown
-}
-
-const { error } = Astro.props
+import Layout from '@/layouts/Layout.astro'
+import Hero from '@/components/Hero.astro'
 ---
 
-<div>{error instanceof Error ? error.message : 'Unknown error'}</div>
+<Layout
+	title='Astro Template'
+	description='Astro Template'>
+	<main class='container mx-auto'>
+		<Hero />
+	</main>
+</Layout>
