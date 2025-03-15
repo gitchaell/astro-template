@@ -9,7 +9,7 @@ import prettierlint from 'eslint-config-prettier'
 export default [
 	{
 		files: ['**/*.{js,mjs,cjs,ts}'],
-		ignores: ['/node_modules/**', '/dist/**', '/.astro/**'],
+		ignores: ['**/node_modules/**', '**/dist/**', '**/build/**', '**/.astro/**'],
 	},
 	{
 		languageOptions: {
