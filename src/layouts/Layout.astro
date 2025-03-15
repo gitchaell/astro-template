@@ -11,17 +11,13 @@ interface Props {
 	domain?: string
 }
 
-const { title, description, domain = 'https://lorem.vercel.app' } = Astro.props
+const { title, description } = Astro.props
 ---
 
 <!doctype html>
 <html lang='en'>
 	<head>
 		<meta charset='UTF-8' />
-		<meta
-			name='description'
-			content={description}
-		/>
 		<meta
 			name='viewport'
 			content='width=device-width'
@@ -43,13 +39,12 @@ const { title, description, domain = 'https://lorem.vercel.app' } = Astro.props
 		/>
 
 		<SEO
-			name='Astro Template'
+			url='https://amazing.app/'
 			title={title}
 			description={description}
-			image={{ src: 'https://lorem.vercel.app/opengraph.png', alt: 'Opengraph Image' }}
-			twitter={{ handle: 'handle' }}
-			og={{ type: 'website' }}
-			canonicalURL={new URL(Astro.request.url, Astro.site)}
+			image={{ url: 'https://amazing.app/og/image.png', alt: 'Amazing App Image' }}
+			twitter={{ site: { username: '@amazingapp' } }}
+			opengraph={{ type: 'website', locale: 'en', site: { name: 'Amazing App' } }}
 		/>
 		<ClientRouter />
 	</head>

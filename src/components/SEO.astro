@@ -1,79 +1,326 @@
 ---
-export type Image = {
-	src: string
-	alt: string
-}
-export type SEOMetadata = {
-	name: string
+type SEOMetadata = {
+	/**
+	 * og: The title of your object as it should appear within the graph, e.g., "The Rock".
+	 * twitter: Title of content (max 70 characters). Used with summary, summary_large_image, player cards
+	 */
 	title: string
+	/**
+	 * og: A one to two sentence description of your object.
+	 * twitter: Description of content (maximum 200 characters) Used with `summary`, `summary_large_image`, `player` cards
+	 */
 	description: string
-	image: Image
-	canonicalURL?: URL | string | null
-	locale?: string
+	/**The canonical URL of your object that will be used as its permanent ID in the graph, e.g., "https://www.imdb.com/title/tt0117500/". */
+	url: string
+	image: {
+		/**
+		 * og: An image URL which should represent your object within the graph.
+		 * twitter: URL of image to use in the card. Images must be less than 5MB in size. JPG, PNG, WEBP and GIF formats are supported. Only the first frame of an animated GIF will be used. SVG is not supported. Used with summary, summary_large_image, player cards
+		 */
+		url: string
+		/** An alternate url to use if the webpage requires HTTPS. */
+		secureUrl?: string
+		/** A MIME type for this image. e.g "image/jpeg" */
+		type?: string
+		/** The number of pixels wide. */
+		width?: string
+		/** The number of pixels high. */
+		height?: string
+		/**
+		 * og: A description of what is in the image (not a caption). If the page specifies an og:image it should specify og:image:alt.
+		 * twitter: A text description of the image conveying the essential nature of an image to users who are visually impaired. Maximum 420 characters. Used with summary, summary_large_image, player cards
+		 */
+		alt: string
+	}
 }
-export type OpenGraph = Partial<SEOMetadata> & {
-	type?: string
+/** https://ogp.me/ */
+type OpenGraph = Partial<SEOMetadata> & {
+	/** The type of your object, e.g., "video.movie". Depending on the type you specify, other properties may also be required. */
+	type:
+		| 'article'
+		| 'book'
+		| 'music.album'
+		| 'music.playlist'
+		| 'music.radio_station'
+		| 'music.song'
+		| 'profile'
+		| 'video.episode'
+		| 'video.movie'
+		| 'video.other'
+		| 'video.tv_show'
+		| 'website'
+	/** The locale these tags are marked up in. Of the format language_TERRITORY. Default is en_US. */
+	locale: string
+	/** An array of other locales this page is available in. */
+	localeAlternates?: string[]
+	site: {
+		/** If your object is part of a larger web site, the name which should be displayed for the overall site. e.g., "IMDb". */
+		name: string
+	}
+	/** The word that appears before this object's title in a sentence. An enum of (a, an, the, "", auto). If auto is chosen, the consumer of your data should chose between "a" or "an". Default is "" (blank). */
+	determiner?: string
+	audio?: {
+		/** A URL to an audio file to accompany this object. */
+		url?: string
+		/** An alternate url to use if the webpage requires HTTPS. */
+		secureUrl?: string
+		/** A MIME type for this audio. e.g "audio/mpeg" */
+		type?: string
+	}
+	video?: {
+		/** A URL to a video file that complements this object. */
+		url?: string
+		/** An alternate url to use if the webpage requires HTTPS. */
+		secureUrl?: string
+		/** A MIME type for this video. e.g "video/webm" */
+		type?: string
+		/** The number of pixels wide. */
+		width?: string
+		/** The number of pixels high. */
+		height?: string
+		/** Which series this episode belongs to. */
+		series?: string
+		/** Actors in the movie. */
+		actor?: {
+			/** The name of the actor. */
+			name?: string
+			/** The role they played. */
+			role?: string
+		}
+		/** Directors of the movie. */
+		director?: string
+		/** Writers of the movie. */
+		writer?: string
+		/** The movie's length in seconds. */
+		duration?: string
+		/** The date the movie was released. */
+		releaseDate?: string
+		/** Tag words associated with this movie. */
+		tags?: string[]
+	}
+	music?: {
+		/** The song's length in seconds. */
+		duration?: string
+		/** The musician that made this song. */
+		musicians?: string[]
+		/** The date the album was released. */
+		releaseDate?: string
+		/** The creator of this playlist. */
+		creator?: string
+		song?: {
+			/** The name of the song. */
+			name?: string
+			/** Which disc of the album this song is on. */
+			disc?: string
+			/** Which track this song is. */
+			track?: string
+		}
+		album?: {
+			/** The name of the album. */
+			name?: string
+			/** Which disc of the album this song is on. */
+			disc?: string
+			/** Which track this song is. */
+			track?: string
+		}
+	}
+	article?: {
+		/** When the article was first published. */
+		publishedTime?: string
+		/** When the article was last changed. */
+		modifiedTime?: string
+		/** When the article is out of date after. */
+		expirationTime?: string
+		/** Writers of the article. */
+		authors?: string[]
+		/** A high-level section name. E.g. Technology */
+		section?: string
+		/** Tag words associated with this article. */
+		tags?: string[]
+	}
+	book?: {
+		/** Who wrote this book. */
+		authors?: string[]
+		/** The ISBN https://en.wikipedia.org/wiki/International_Standard_Book_Number */
+		isbn?: string
+		/** The date the book was released. */
+		releaseDate?: string
+		/** Tag words associated with this book. */
+		tags?: string[]
+	}
+	profile?: {
+		/** A name normally given to an individual by a parent or self-chosen. */
+		firstName?: string
+		/** A name inherited from a family or marriage and by which the individual is commonly known. */
+		lastName?: string
+		/** A short unique string to identify them. */
+		username?: string
+		/** Their gender. */
+		gender?: 'male' | 'female'
+	}
 }
-export type Twitter = Partial<SEOMetadata> & {
-	handle?: string
-	card?: 'summary' | 'summary_large_image'
+// https://developer.x.com/en/docs/x-for-websites/cards/overview/markup
+type Twitter = Partial<SEOMetadata> & {
+	/** The card type. Used with all cards. If an og:type, og:title and og:description exist in the markup but twitter:card is absent, then a summary card may be rendered. */
+	card?: 'summary' | 'summary_large_image' | 'app' | 'player'
+	site?: {
+		/** @username of website. Either twitter:site or twitter:site:id is required. Used with `summary`, `summary_large_image`, `app`, `player` cards */
+		username?: string
+		/** Same as twitter:site, but the user’s Twitter ID. Either twitter:site or twitter:site:id is required. Used with `summary`, `summary_large_image`, `player` cards */
+		id?: string
+	}
+	creator?: {
+		/** @username of content creator. Used with `summary_large_image` cards */
+		username?: string
+		/** Twitter user ID of content creator. Used with `summary`, `summary_large_image` cards */
+		id?: string
+	}
+	player?: {
+		/** HTTPS URL of player iframe. Used with `player` card */
+		url?: string
+		/** Width of iframe in pixels. Used with `player` card */
+		width?: string
+		/** Height of iframe in pixels. Used with `player` card */
+		height?: string
+		/** URL to raw video or audio stream. Used with `player` card */
+		stream?: string
+	}
 }
 export type Props = SEOMetadata & {
-	og?: OpenGraph
+	opengraph?: OpenGraph
 	twitter?: Twitter
 }
-const {
-	name,
-	title,
-	description,
-	image,
-	locale = 'en',
-	canonicalURL = new URL(Astro.url.pathname, Astro.site),
-} = Astro.props
+const { title, description, image, url } = Astro.props
 
-const og = {
-	name,
+const opengraph = {
 	title,
 	description,
-	canonicalURL,
 	image,
-	locale,
 	type: 'website',
-	...Astro.props.og,
+	locale: 'en_US',
+	site: {
+		name: 'Astro',
+	},
+	...Astro.props.opengraph,
 } satisfies OpenGraph
 
 const twitter = {
-	name,
 	title,
 	description,
-	canonicalURL,
 	image,
-	locale,
 	card: 'summary_large_image',
 	...Astro.props.twitter,
 } satisfies Twitter
 
-/**
- * Enforce some standard canonical URL formatting across the site.
- */
-function formatCanonicalURL(url: string | URL) {
-	const path = url.toString()
-	const hasQueryParams = path.includes('?')
-	// If there are query params, make sure the URL has no trailing slash
-	if (hasQueryParams) {
-		path.replace(/\/?$/, '')
-	}
-	// otherwise, canonical URL always has a trailing slash
-	return path.replace(/\/?$/, hasQueryParams ? '' : '/')
-}
+const openGraphMetaTags = [
+	{ property: 'og:title', content: title },
+	{ property: 'og:type', content: opengraph.type },
+	{ property: 'og:url', content: url },
+	{ property: 'og:image', content: image.url },
+	{ property: 'og:audio', content: opengraph.audio?.url },
+	{ property: 'og:determiner', content: opengraph.determiner },
+	{ property: 'og:locale', content: opengraph.locale },
+	...(opengraph.localeAlternates || []).map((alternate) => ({
+		property: 'og:locale:alternate',
+		content: alternate,
+	})),
+	{ property: 'og:description', content: description },
+	{ property: 'og:site_name', content: opengraph.site.name },
+	{ property: 'og:video', content: opengraph.video?.url },
+	// Image
+	{ property: 'og:image:url', content: image.url },
+	{ property: 'og:image:secure_url', content: image.secureUrl },
+	{ property: 'og:image:type', content: image.type },
+	{ property: 'og:image:width', content: image.width },
+	{ property: 'og:image:height', content: image.height },
+	{ property: 'og:image:alt', content: image.alt },
+	// Video
+	{ property: 'og:video:url', content: opengraph.video?.url },
+	{ property: 'og:video:secure_url', content: opengraph.video?.secureUrl },
+	{ property: 'og:video:type', content: opengraph.video?.type },
+	{ property: 'og:video:width', content: opengraph.video?.width },
+	{ property: 'og:video:height', content: opengraph.video?.height },
+	{ property: 'video:actor', content: opengraph.video?.actor?.name },
+	{ property: 'video:actor:role', content: opengraph.video?.actor?.role },
+	{ property: 'video:director', content: opengraph.video?.director },
+	{ property: 'video:writer', content: opengraph.video?.writer },
+	{ property: 'video:duration', content: opengraph.video?.duration },
+	{ property: 'video:release_date', content: opengraph.video?.releaseDate },
+	...(opengraph.video?.tags || []).map((tag) => ({
+		property: 'video:tag',
+		content: tag,
+	})),
+	// Audio
+	{ property: 'og:audio:url', content: opengraph.audio?.url },
+	{ property: 'og:audio:secure_url', content: opengraph.audio?.secureUrl },
+	{ property: 'og:audio:type', content: opengraph.audio?.type },
+	// Music
+	{ property: 'music:duration', content: opengraph.music?.duration },
+	...(opengraph.music?.musicians || []).map((musician) => ({
+		property: 'music:musician',
+		content: musician,
+	})),
+	{ property: 'music:release_date', content: opengraph.music?.releaseDate },
+	{ property: 'music:creator', content: opengraph.music?.creator },
+	{ property: 'music:song', content: opengraph.music?.song?.name },
+	{ property: 'music:song:disc', content: opengraph.music?.song?.disc },
+	{ property: 'music:song:track', content: opengraph.music?.song?.track },
+	{ property: 'music:album', content: opengraph.music?.album?.name },
+	{ property: 'music:album:disc', content: opengraph.music?.album?.disc },
+	{ property: 'music:album:track', content: opengraph.music?.album?.track },
+	// Article
+	{ property: 'article:published_time', content: opengraph.article?.publishedTime },
+	{ property: 'article:modified_time', content: opengraph.article?.modifiedTime },
+	{ property: 'article:expiration_time', content: opengraph.article?.expirationTime },
+	...(opengraph.article?.authors || []).map((author) => ({
+		property: 'article:author',
+		content: author,
+	})),
+	{ property: 'article:section', content: opengraph.article?.section },
+	...(opengraph.article?.tags || []).map((tag) => ({
+		property: 'article:tag',
+		content: tag,
+	})),
+	// Book
+	...(opengraph.book?.authors || []).map((author) => ({
+		property: 'book:author',
+		content: author,
+	})),
+	{ property: 'book:isbn', content: opengraph.book?.isbn },
+	{ property: 'book:release_date', content: opengraph.book?.releaseDate },
+	...(opengraph.book?.tags || []).map((tag) => ({
+		property: 'book:tag',
+		content: tag,
+	})),
+	// Profile
+	{ property: 'profile:first_name', content: opengraph.profile?.firstName },
+	{ property: 'profile:last_name', content: opengraph.profile?.lastName },
+	{ property: 'profile:username', content: opengraph.profile?.username },
+	{ property: 'profile:gender', content: opengraph.profile?.gender },
+].filter((metatag) => metatag.content !== undefined)
+
+const twitterMetaTags = [
+	{ name: 'twitter:card', content: twitter.card },
+	{ name: 'twitter:site', content: twitter.site?.username },
+	{ name: 'twitter:site:id', content: twitter.site?.id },
+	{ name: 'twitter:creator', content: twitter.creator?.username },
+	{ name: 'twitter:creator:id', content: twitter.creator?.id },
+	{ name: 'twitter:description', content: description },
+	{ name: 'twitter:title', content: title },
+	{ name: 'twitter:image', content: image.url },
+	{ name: 'twitter:image:alt', content: image.alt },
+	{ name: 'twitter:player', content: twitter.player?.url },
+	{ name: 'twitter:player:width', content: twitter.player?.width },
+	{ name: 'twitter:player:height', content: twitter.player?.height },
+	{ name: 'twitter:player:stream', content: twitter.player?.stream },
+].filter((metatag) => metatag.content !== undefined)
 ---
 
-{/* Page Metadata */}
-{
-	canonicalURL && (
+<!-- Page Metadata -->{
+	url && (
 		<link
 			rel='canonical'
-			href={formatCanonicalURL(canonicalURL)}
+			href={url}
 		/>
 	)
 }
@@ -81,99 +328,27 @@ function formatCanonicalURL(url: string | URL) {
 	name='description'
 	content={description}
 />
-
-{/* OpenGraph Tags */}
-<meta
-	property='og:title'
-	content={og.title}
-/>
-<meta
-	property='og:type'
-	content={og.type}
-/>
 {
-	og.canonicalURL && (
+	openGraphMetaTags.map(({ property, content }) => (
 		<meta
-			property='og:url'
-			content={formatCanonicalURL(og.canonicalURL)}
+			property={property}
+			content={content}
 		/>
-	)
-}
-<meta
-	property='og:locale'
-	content={og.locale}
-/>
-<meta
-	property='og:description'
-	content={og.description}
-/>
-<meta
-	property='og:site_name'
-	content={og.name}
-/>
-{
-	og.image && (
-		<meta
-			property='og:image'
-			content={og.image.src}
-		/>
-	)
+	))
 }
 {
-	og.image && (
+	twitterMetaTags.map(({ name, content }) => (
 		<meta
-			property='og:image:alt'
-			content={og.image.alt}
+			name={name}
+			content={content}
 		/>
-	)
-}
-
-{/* Twitter Tags */}
-{
-	twitter.card && (
-		<meta
-			name='twitter:card'
-			content={twitter.card}
-		/>
-	)
-}
-{
-	twitter.handle && (
-		<meta
-			name='twitter:site'
-			content={twitter.handle}
-		/>
-	)
-}
-<meta
-	name='twitter:title'
-	content={twitter.title}
-/>
-<meta
-	name='twitter:description'
-	content={twitter.description}
-/>
-{
-	twitter.image && (
-		<meta
-			name='twitter:image'
-			content={twitter.image.src}
-		/>
-	)
-}
-{
-	twitter.image && (
-		<meta
-			name='twitter:image:alt'
-			content={twitter.image.alt}
-		/>
-	)
+	))
 }
 
 {
 	/*
 	Robots meta tag for Google Search.
-	Enables a large image preview in Google search results, most pertinently in Chrome’s “Discover” view on mobile.
+	Enables a large image preview in Google search results, most pertinently in Chrome’s "Discover" view on mobile.
 	See: https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag#max-image-preview
 */
 }
