@@ -316,7 +316,7 @@ const twitterMetaTags = [
 ].filter((metatag) => metatag.content !== undefined)
 ---
 
-<!-- Page Metadata -->{
+{
 	url && (
 		<link
 			rel='canonical'
@@ -324,6 +324,10 @@ const twitterMetaTags = [
 		/>
 	)
 }
+<link
+	rel='sitemap'
+	href='/sitemap-index.xml'
+/>
 <meta
 	name='description'
 	content={description}

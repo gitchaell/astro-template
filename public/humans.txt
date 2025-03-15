@@ -1,0 +1,6 @@
+This Astro Template was built by Michaell Alavedra!
+
+GitHub: https://github.com/gitchaell
+Personal: https://michaellalavedra.com
+
+Checkout the https://humanstxt.org/ protocol to see how you should format your humans.txt file!

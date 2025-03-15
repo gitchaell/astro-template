@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://amazing.app/sitemap-index.xml
