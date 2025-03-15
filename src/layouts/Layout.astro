@@ -1,10 +1,6 @@
 ---
-import '@/styles/fontface.css'
-import '@/styles/global.css'
-import { ClientRouter } from 'astro:transitions'
+import Head from '@/components/Head.astro'
 import Analytics from '@vercel/analytics/astro'
-import Favicon from '@/components/Favicon.astro'
-import SEO from '@/components/SEO.astro'
 
 interface Props {
 	title: string
@@ -17,28 +13,10 @@ const { title, description } = Astro.props
 
 <!doctype html>
 <html lang='en'>
-	<head>
-		<meta charset='UTF-8' />
-		<meta
-			name='viewport'
-			content='width=device-width'
-		/>
-		<Favicon />
-		<meta
-			name='generator'
-			content={Astro.generator}
-		/>
-		<title>{title}</title>
-		<SEO
-			url='https://amazing.app/'
-			title={title}
-			description={description}
-			image={{ url: 'https://amazing.app/opengraph/image.png', alt: 'Amazing App Image' }}
-			twitter={{ site: { username: '@amazingapp' } }}
-			opengraph={{ type: 'website', locale: 'en', site: { name: 'Amazing App' } }}
-		/>
-		<ClientRouter />
-	</head>
+	<Head
+		title={title}
+		description={description}
+	/>
 
 	<body
 		class='relative h-dvh overflow-x-hidden overflow-y-auto bg-zinc-50 font-sans text-black antialiased selection:bg-zinc-300 selection:text-zinc-900 dark:bg-zinc-900 dark:text-white dark:selection:bg-zinc-700 dark:selection:text-zinc-50'>

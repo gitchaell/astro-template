@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config'
 import tailwindcss from '@tailwindcss/vite'
 import sitemap from '@astrojs/sitemap';
 import AstroPWA from '@vite-pwa/astro'
+import astrobook from 'astrobook'
 
 // https://astro.build/config
 export default defineConfig({
@@ -45,6 +46,12 @@ export default defineConfig({
 			experimental: {
 				directoryAndTrailingSlashHandler: true,
 			}
+		}),
+		astrobook({
+			subpath: 'stories',
+			directory: 'src/components',
+			head: 'src/components/Head.astro',
+			title: 'Astrobook'
 		})
 	],
 
