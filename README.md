@@ -1,9 +1,9 @@
 <div align="center">
-	<a href="https://amazing.app/">
-		<img src="https://raw.githubusercontent.com/gitchaell/astro-template/main/public/opengraph/image.png">
-	</a>
+<a href="https://amazing.app/">
+	<img src="https://raw.githubusercontent.com/gitchaell/astro-template/main/public/opengraph/image.png">
+</a>
 
-	<p></p>
+<p></p>
 </div>
 
 # Astro Template (v1.0.0)
